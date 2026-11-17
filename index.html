@@ -1,0 +1,954 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bagus Bhaskara | Personal Portfolio</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: #ededed;
+      background-color: #08090c;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(ellipse at 15% 5%, rgba(56,189,248,.10), transparent 32%),
+        radial-gradient(ellipse at 90% 45%, rgba(56,189,248,.055), transparent 35%),
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size:
+        auto,
+        auto,
+        48px 48px,
+        48px 48px;
+    }
+
+    h1, h2, h3, .brand {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .accent {
+      color: #55c8f5;
+    }
+
+    .section-label {
+      color: #55c8f5;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 5vw, 55px);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -2px;
+    }
+
+    .section-description {
+      color: #9298a3;
+      line-height: 1.9;
+      font-size: 14px;
+    }
+
+    /* NAVIGATION */
+
+    .navbar {
+      background: rgba(8,9,12,.88);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-link {
+      position: relative;
+      color: #a1a1aa;
+      font-size: 13px;
+      transition: .3s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #55c8f5;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -7px;
+      width: 0;
+      height: 1px;
+      background: #55c8f5;
+      transition: .3s;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* MOBILE NAVIGATION */
+
+    #mobile-nav {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transform: translateY(-10px);
+      transition:
+        max-height .4s ease,
+        opacity .3s ease,
+        transform .3s ease;
+    }
+
+    #mobile-nav.is-open {
+      max-height: 380px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-line {
+      display: block;
+      width: 24px;
+      height: 2px;
+      margin: 5px 0;
+      background: #fff;
+      transition: .3s;
+    }
+
+    #menu-toggle.is-open .menu-line:first-child {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    #menu-toggle.is-open .menu-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    #menu-toggle.is-open .menu-line:last-child {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* HERO */
+
+    .hero-section {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero-section::before {
+      content: "PORTFOLIO";
+      position: absolute;
+      z-index: -1;
+      top: 22%;
+      left: -5%;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(90px, 17vw, 220px);
+      font-weight: 700;
+      letter-spacing: -12px;
+      color: rgba(255,255,255,.018);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .hero-title {
+      font-size: clamp(44px, 7vw, 76px);
+      line-height: 1.05;
+      letter-spacing: -4px;
+      font-weight: 700;
+    }
+
+    .hero-description {
+      max-width: 480px;
+      color: #9ca3af;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      padding: 14px 24px;
+      background: #55c8f5;
+      color: #071018;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 5px;
+      transition: .3s;
+    }
+
+    .primary-btn:hover {
+      background: #a5e5ff;
+      transform: translateY(-3px);
+    }
+
+    .secondary-btn {
+      display: inline-block;
+      padding: 13px 24px;
+      border: 1px solid #383d46;
+      color: #e5e7eb;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 5px;
+      transition: .3s;
+    }
+
+    .secondary-btn:hover {
+      border-color: #55c8f5;
+      color: #55c8f5;
+    }
+
+    /* PROFILE IMAGE */
+
+    .profile-frame {
+      position: relative;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(145deg, #1a2029, #0a0d12);
+      border-radius: 10px;
+      box-shadow: 0 25px 80px rgba(0,0,0,.5);
+    }
+
+    .profile-frame::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      width: 75%;
+      height: 75%;
+      border-top: 2px solid #55c8f5;
+      border-right: 2px solid #55c8f5;
+      border-radius: 0 12px 0 0;
+      pointer-events: none;
+    }
+
+    .profile-frame::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      left: -12px;
+      width: 75%;
+      height: 75%;
+      border-bottom: 2px solid #55c8f5;
+      border-left: 2px solid #55c8f5;
+      border-radius: 0 0 0 12px;
+      pointer-events: none;
+    }
+
+    .profile-photo {
+      position: relative;
+      z-index: 1;
+      height: 430px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: #151a20;
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform .7s ease;
+    }
+
+    .profile-frame:hover .profile-photo img {
+      transform: scale(1.035);
+    }
+
+    .profile-caption {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 5px 4px;
+    }
+
+    .profile-caption h3 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .profile-caption p {
+      color: #55c8f5;
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+
+    /* ABOUT */
+
+    .about-panel {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(130deg, #151a21, #0d1015);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 8px;
+      padding: 35px;
+    }
+
+    .about-panel::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -90px;
+      bottom: -120px;
+      background: rgba(56,189,248,.10);
+      filter: blur(70px);
+      pointer-events: none;
+    }
+
+    .about-text {
+      position: relative;
+      z-index: 1;
+      color: #a1a1aa;
+      line-height: 2;
+      font-size: 14px;
+      max-width: 850px;
+    }
+
+    /* SKILLS */
+
+    .skill-card {
+      padding: 20px;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(20,24,31,.8);
+      border-radius: 6px;
+      transition: .3s;
+    }
+
+    .skill-card:hover {
+      border-color: rgba(85,200,245,.55);
+      background: #171f29;
+      transform: translateY(-4px);
+    }
+
+    .skill-card span {
+      font-size: 13px;
+      font-weight: 600;
+      color: #d4d4d8;
+    }
+
+    /* PORTFOLIO */
+
+    .project-card {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      background: #11151b;
+      border-radius: 7px;
+      transition: .35s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(85,200,245,.5);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: #1b2028;
+      transition: .5s;
+    }
+
+    .project-card:hover .project-image {
+      transform: scale(1.025);
+    }
+
+    .project-content {
+      padding: 22px;
+    }
+
+    .project-category {
+      color: #55c8f5;
+      font-size: 10px;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    .project-content h3 {
+      margin-top: 12px;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .project-content p {
+      margin-top: 10px;
+      color: #9298a3;
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    /* WHAT I DO / SERVICES */
+
+    .services-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(115deg, rgba(17,23,31,.98), rgba(9,12,17,.98));
+      border-top: 1px solid rgba(255,255,255,.07);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .services-section::before {
+      content: "";
+      position: absolute;
+      top: -200px;
+      right: -100px;
+      width: 450px;
+      height: 450px;
+      background: rgba(56,189,248,.07);
+      filter: blur(100px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .services-intro {
+      max-width: 550px;
+      color: #969eaa;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .services-list {
+      position: relative;
+      z-index: 1;
+      margin-top: 55px;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+
+    .service-item {
+      display: grid;
+      grid-template-columns: 75px 1fr 200px;
+      align-items: center;
+      gap: 25px;
+      padding: 34px 15px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      transition: background .3s, padding .3s;
+    }
+
+    .service-item:hover {
+      background: rgba(255,255,255,.025);
+      padding-left: 25px;
+    }
+
+    .service-number {
+      color: #55c8f5;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .service-content h3 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -.5px;
+    }
+
+    .service-content p {
+      max-width: 530px;
+      margin-top: 10px;
+      color: #9298a3;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .service-detail {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .service-detail span {
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 3px;
+      color: #aeb4bd;
+      font-size: 10px;
+    }
+
+    .services-note {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-top: 30px;
+      padding: 24px 0;
+    }
+
+    .services-note p {
+      color: #a1a1aa;
+      font-size: 13px;
+    }
+
+    /* CONTACT */
+
+    .contact-panel {
+      position: relative;
+      overflow: hidden;
+      padding: 45px;
+      border: 1px solid rgba(255,255,255,.1);
+      background:
+        radial-gradient(ellipse at 90% 10%, rgba(56,189,248,.12), transparent 40%),
+        linear-gradient(130deg, #151b24, #0c0f14);
+      border-radius: 8px;
+    }
+
+    .contact-description {
+      max-width: 600px;
+      color: #9ca3af;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(5,6,8,.7);
+    }
+
+    /* ANIMATION */
+
+    .fade-up {
+      animation: fadeUp .9s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+      .hero-title {
+        letter-spacing: -2px;
+      }
+
+      .profile-photo {
+        height: 350px;
+      }
+
+      .hero-section::before {
+        top: 18%;
+        left: -10%;
+        letter-spacing: -5px;
+      }
+
+      .about-panel {
+        padding: 25px;
+      }
+
+      .service-item {
+        grid-template-columns: 35px 1fr;
+        gap: 12px;
+        padding: 27px 5px;
+      }
+
+      .service-detail {
+        grid-column: 2;
+        justify-content: flex-start;
+      }
+
+      .service-content h3 {
+        font-size: 18px;
+      }
+
+      .services-note {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .contact-panel {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar fixed top-0 left-0 z-50 w-full">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+
+      <a href="#home" class="brand text-xl font-bold tracking-wider">
+        Bagus<span class="accent">.</span>
+      </a>
+
+      <nav class="hidden items-center gap-8 md:flex">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#portfolio" class="nav-link">Portfolio</a>
+        <a href="#services" class="nav-link">My Expertise</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <button id="menu-toggle" class="md:hidden" aria-label="Buka menu" aria-expanded="false">
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+      </button>
+
+    </div>
+
+    <nav id="mobile-nav" class="border-t border-white/10 bg-[#08090c] px-6 md:hidden">
+      <div class="flex flex-col gap-5 py-6">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#portfolio" class="nav-link">Portfolio</a>
+        <a href="#services" class="nav-link">What I Do</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+
+  <main>
+
+    <!-- HERO -->
+    <section id="home" class="hero-section mx-auto grid min-h-screen max-w-6xl items-center gap-16 px-6 pb-16 pt-32 md:grid-cols-2">
+
+      <div class="fade-up order-2 md:order-1">
+
+        <p class="section-label mb-6">PERSONAL PORTFOLIO / 2026</p>
+
+        <h1 class="hero-title">
+          Hello,<br>
+          I'm <span class="accent">Bagus.</span>
+        </h1>
+
+        <h2 class="mt-6 text-lg font-semibold text-neutral-300">
+          Creative Web Developer
+        </h2>
+
+        <p class="hero-description mt-6">
+          Saya memiliki ketertarikan pada dunia teknologi, desain,
+          dan pengembangan website. Saya senang mengeksplorasi ide,
+          mempelajari hal baru, serta mengubah konsep menjadi
+          pengalaman digital yang menarik dan fungsional.
+        </p>
+
+        <div class="mt-9 flex flex-wrap gap-4">
+          <a href="#portfolio" class="primary-btn">
+            Explore My Work
+          </a>
+
+          <a href="#contact" class="secondary-btn">
+            Get In Touch
+          </a>
+        </div>
+
+        <div id="social-links" class="mt-10 flex items-center gap-5"></div>
+
+      </div>
+
+
+      <div class="order-1 mx-auto w-full max-w-sm md:order-2 md:max-w-md">
+
+        <div class="profile-frame">
+          <div class="profile-photo">
+            <img
+              src="assets/images/bagus ni boss.jpeg"
+              alt="Foto profil Bagus Bhaskara"
+            >
+          </div>
+
+          <div class="profile-caption">
+            <h3>BAGUS BHASKARA</h3>
+            <p>CREATIVE / DIGITAL</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+    <section id="about" class="mx-auto max-w-6xl px-6 py-28">
+
+      <div class="mb-10">
+        <p class="section-label mb-4">A LITTLE INTRODUCTION</p>
+        <h2 class="section-title">
+          About <span class="accent">Me.</span>
+        </h2>
+      </div>
+
+      <div class="about-panel">
+        <p class="about-text">
+          Halo, saya Bagus Bhaskara. Saya tertarik dengan perkembangan
+          teknologi digital, khususnya dalam bidang desain dan
+          pengembangan website. Bagi saya, sebuah website bukan hanya
+          tentang tampilan, tetapi juga bagaimana informasi disampaikan
+          dengan baik dan bagaimana pengguna merasa nyaman saat
+          menggunakannya. Saya terus belajar, mencoba berbagai hal baru,
+          dan mengembangkan kemampuan melalui proyek-proyek yang saya buat.
+        </p>
+      </div>
+
+    </section>
+
+
+    <!-- SKILLS -->
+    <section id="skills" class="mx-auto max-w-6xl px-6 py-28">
+
+      <div class="mb-12">
+        <p class="section-label mb-4">TOOLS & TECHNOLOGIES</p>
+        <h2 class="section-title">
+          My <span class="accent">Skills.</span>
+        </h2>
+
+        <p class="section-description mt-5 max-w-xl">
+          Beberapa teknologi dan tools yang saya pelajari dan gunakan
+          dalam proses desain maupun pengembangan website.
+        </p>
+      </div>
+
+      <div id="skills-container" class="grid grid-cols-2 gap-4 md:grid-cols-4"></div>
+
+    </section>
+
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="mx-auto max-w-6xl px-6 py-28">
+
+      <div class="mb-12">
+        <p class="section-label mb-4">SELECTED WORKS</p>
+        <h2 class="section-title">
+          My <span class="accent">Portfolio.</span>
+        </h2>
+
+        <p class="section-description mt-5 max-w-xl">
+          Beberapa proyek dan eksplorasi yang menjadi bagian dari
+          perjalanan saya dalam mempelajari dunia digital.
+        </p>
+      </div>
+
+      <div id="projects-container" class="grid gap-7 md:grid-cols-3"></div>
+
+    </section>
+
+
+    <!-- WHAT I DO -->
+    <section id="services" class="services-section px-6 py-28">
+
+      <div class="relative z-10 mx-auto max-w-6xl">
+
+        <div class="grid gap-8 md:grid-cols-2 md:items-end">
+
+          <div>
+            <p class="section-label mb-4">MY CREATIVE SPACE</p>
+
+            <h2 class="section-title">
+              My <span class="accent">Expertise</span>
+            </h2>
+          </div>
+
+          <p class="services-intro">
+            Saya menikmati proses membangun sesuatu dari awal,
+            mulai dari menyusun ide dan merancang tampilan hingga
+            mengembangkan website yang dapat digunakan dengan baik.
+            Berikut beberapa hal yang menjadi fokus saya.
+          </p>
+
+        </div>
+
+
+        <div class="services-list">
+
+          <div class="service-item">
+
+            <div class="service-number">01</div>
+
+            <div class="service-content">
+              <h3>Website Development</h3>
+
+              <p>
+                Mengembangkan halaman website dengan struktur yang
+                teratur, tampilan yang menarik, serta fungsi yang
+                sesuai dengan kebutuhan.
+              </p>
+            </div>
+
+            <div class="service-detail">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+            </div>
+
+          </div>
+
+
+          <div class="service-item">
+
+            <div class="service-number">02</div>
+
+            <div class="service-content">
+              <h3>Interface & Visual Design</h3>
+
+              <p>
+                Mengeksplorasi tata letak, warna, tipografi, dan
+                elemen visual untuk menciptakan tampilan website
+                yang konsisten dan mudah dipahami.
+              </p>
+            </div>
+
+            <div class="service-detail">
+              <span>UI Design</span>
+              <span>Layout</span>
+              <span>Figma</span>
+            </div>
+
+          </div>
+
+
+          <div class="service-item">
+
+            <div class="service-number">03</div>
+
+            <div class="service-content">
+              <h3>Responsive Web Design</h3>
+
+              <p>
+                Menyesuaikan tampilan dan susunan elemen website
+                agar tetap nyaman digunakan melalui berbagai
+                ukuran layar dan perangkat.
+              </p>
+            </div>
+
+            <div class="service-detail">
+              <span>Mobile</span>
+              <span>Tablet</span>
+              <span>Desktop</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="services-note">
+
+          <p>
+            Setiap proyek dimulai dari sebuah ide dan proses eksplorasi.
+          </p>
+
+          <a href="#contact" class="primary-btn">
+            Let's Talk
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+    <section id="contact" class="mx-auto max-w-6xl px-6 py-28">
+
+      <div class="mb-12">
+        <p class="section-label mb-4">CONTACT</p>
+
+        <h2 class="section-title">
+          Let's Work <span class="accent">Together.</span>
+        </h2>
+      </div>
+
+      <div class="contact-panel">
+
+        <h3 class="text-2xl font-bold md:text-3xl">
+          Have something in mind?
+        </h3>
+
+        <p class="contact-description mt-5">
+          Saya terbuka untuk berdiskusi, bertukar ide, dan mengeksplorasi
+          berbagai kemungkinan dalam sebuah proyek. Jangan ragu untuk
+          menghubungi saya melalui kontak berikut.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+
+          <a
+            href="putubaskara0512@gmail.com"
+            class="primary-btn"
+          >
+            Send Me an Email
+          </a>
+
+          <a
+            href="https://www.instagram.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="secondary-btn"
+          >
+            Instagram
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="px-6 py-8">
+
+    <div class="mx-auto flex max-w-6xl flex-col justify-between gap-4 md:flex-row md:items-center">
+
+      <a href="#home" class="brand text-lg font-bold">
+        Bagus<span class="accent">.</span>
+      </a>
+
+      <p class="text-xs text-neutral-500">
+        Designed & Developed by Bagus Bhaskara © 2026
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
